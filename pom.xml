@@ -58,6 +58,13 @@
                 <version>${lombok.version}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>io.trino</groupId>
+                <artifactId>trino-jdbc</artifactId>
+                <version>355</version>
+                <scope>provided</scope>
+            </dependency>
+
 
             <!-- Test deps -->
             <dependency>

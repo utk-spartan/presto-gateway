@@ -1,16 +1,22 @@
 #FROM openjdk:8-alpine3.9
-FROM maven:3.6.3-ibmjava-8-alpine
+FROM maven:3.8.1-ibmjava-8-alpine
 
 ENV APP_VERSION 1.8.3
 WORKDIR /app
 
-RUN apk add mysql-client
+RUN apk add mariadb-dev mariadb-client
 
 # mariadb/mysql odbc/jdbc lib package is still WIP in alpine, installing platform independent binary
 ARG JDBC_DRV_VER=8.0.18
+ARG TRINO_JDBC_VERSION=355
 RUN mkdir -p /usr/share/java \
     && curl -SL "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${JDBC_DRV_VER}.tar.gz" \
     | tar -xzC /usr/share/java/ \
-    && echo "export CLASSPATH=/usr/share/java/mysql-connector-java-${JDBC_DRV_VER}/mysql-connector-java-${JDBC_DRV_VER}.jar:$CLASSPATH" >> /etc/profile
+    # && curl -O https://repo1.maven.org/maven2/io/prestosql/presto-jdbc/333/presto-jdbc-333.jar \
+    # && mv ./presto-jdbc-333.jar /usr/share/java/presto-jdbc-333.jar \
+    && curl -O "https://repo1.maven.org/maven2/io/trino/trino-jdbc/${TRINO_JDBC_VERSION}/trino-jdbc-${TRINO_JDBC_VERSION}.jar" \
+    && mv "./trino-jdbc-${TRINO_JDBC_VERSION}.jar" "/usr/share/java/trino-jdbc-${TRINO_JDBC_VERSION}.jar" \
+    && echo "export CLASSPATH=/usr/share/java/mysql-connector-java-${JDBC_DRV_VER}/mysql-connector-java-${JDBC_DRV_VER}.jar:$CLASSPATH" >> /etc/profile \
+    && echo "export CLASSPATH=/usr/share/java/trino-jdbc-${TRINO_JDBC_VERSION}.jar:$CLASSPATH" >> /etc/profile
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

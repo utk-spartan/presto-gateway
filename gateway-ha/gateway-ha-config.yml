@@ -1,5 +1,5 @@
 requestRouter:
-  port: 8080
+  port: 8083
   name: prestoRouter
   historySize: 1000
 

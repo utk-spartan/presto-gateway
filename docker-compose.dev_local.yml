@@ -4,7 +4,8 @@ services:
     build:
       context: .
       dockerfile: dockerconf/Dockerfile.dev
-    image: razorpay/lyft_presto_gateway
+    image: lyft_presto_gateway
+    # image: utk_presto_gateway:v1
     container_name: lyft_presto_gateway
     volumes:
       - .:/app
@@ -20,16 +21,19 @@ services:
     expose:
       - "8091"
       - "8090"
+      - "8083"
     ports:
       - 28090:8090
       - 28091:8091
+      - 8083:8083
     networks:
       - default
+      - presto
     links:
       - lyft_mysql
   lyft_mysql:
     restart: unless-stopped
-    image: mysql:5.7
+    image: mysql:8.0.18
     container_name: lyft_mysql
     ports:
     - 33306:3306
@@ -40,3 +44,14 @@ services:
     - ./dockerconf/mysqlconf:/etc/mysql/conf.d
     networks:
       - default
+networks:
+  presto:
+    external: true
+
+
+  # curl -X POST http://localhost:28090/entity?entityType=GATEWAY_BACKEND -d '{  "name": "presto_stage_k8s", "pro
+  
+
+
+
+  # curl -X POST http://localhost:8080/v1/statement -H 'X-Presto-User: utk' -d '{"select 1;"}'
