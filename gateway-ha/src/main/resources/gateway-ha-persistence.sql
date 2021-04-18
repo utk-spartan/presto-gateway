@@ -69,9 +69,9 @@ CREATE TABLE IF NOT EXISTS exact_match_source_selectors (
     update_time DATETIME NOT NULL,
 
     -- Selector fields which must exactly match a query
-    source VARCHAR(512) NOT NULL,
-    environment VARCHAR(128),
-    query_type VARCHAR(128), -- (reduced from 512)
+    source VARCHAR(256) NOT NULL,
+    environment VARCHAR(40),
+    query_type VARCHAR(40), -- (reduced from 512)
 
     PRIMARY KEY (environment, source, query_type),
     UNIQUE (source, environment, query_type, resource_group_id)
