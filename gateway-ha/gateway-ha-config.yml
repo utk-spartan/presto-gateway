@@ -1,21 +1,21 @@
 requestRouter:
-  port: 8080
+  port: ROUTER_PORT
   name: prestoRouter
   historySize: 1000
 
 dataStore:
-  jdbcUrl: jdbc:mysql://127.0.0.1:3306/prestogateway
-  user: root
-  password: root123
-  driver: com.mysql.cj.jdbc.Driver
+  jdbcUrl: jdbc:mysql://DB_HOST:DB_PORT/DB_NAME
+  user: DB_USER
+  password: DB_PASS
+  driver: com.mysql.jdbc.Driver
 
 server:
   applicationConnectors:
     - type: http
-      port: 8090
+      port: APP_PORT
   adminConnectors:
     - type: http
-      port: 8091
+      port: ADMIN_PORT
 
 notifier:
   smtpHost: localhost
