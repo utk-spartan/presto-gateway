@@ -14,7 +14,7 @@ services:
       DB_HOST: lyft_mysql
       DB_PORT: 3306
       DB_USER: root
-      DB_NAME: prestogateway
+      DB_NAME: trino_gateway
       DB_PASS: root123
       ADMIN_PORT: 8091
       APP_PORT: 8090
@@ -42,7 +42,7 @@ services:
     - 33306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: prestogateway
+      MYSQL_DATABASE: trino_gateway
     volumes:
     - ./dockerconf/mysqlconf:/etc/mysql/conf.d
     networks:

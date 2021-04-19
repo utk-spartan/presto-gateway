@@ -48,7 +48,7 @@ setup_mysql_dev_schema()
     check_mysql_connection
 
     echo "Setting up DB: mysql"
-    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D prestogateway < "${PERSISTANCE_DB_BOOTSTRAP}"
+    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D ${DB_NAME} < "${PERSISTANCE_DB_BOOTSTRAP}"
 }
 
 run_app()
