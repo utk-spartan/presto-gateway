@@ -4,7 +4,7 @@ FROM maven:3.8.1-ibmjava-8-alpine as builder
 
 COPY . /app
 WORKDIR /app
-RUN mvn clean package -DskipJSTests -DskipTests -Drat.skip=true
+RUN mvn clean package -DskipJSTests -DskipTests -Drat.skip=true -Dmaven.artifact.threads=20
 
 FROM maven:3.8.1-ibmjava-8-alpine
 
