@@ -4,14 +4,25 @@ import javax.servlet.http.HttpServletRequest;
 
 /** RoutingGroupSelector provides a way to match an HTTP request to a Gateway routing group. */
 public interface RoutingGroupSelector {
-  String ROUTING_GROUP_HEADER = "X-Presto-Routing-Group";
+  String PRESTO_ROUTING_GROUP_HEADER = "X-Presto-Routing-Group";
+  String TRINO_ROUTING_GROUP_HEADER = "X-Trino-Routing-Group";
 
   /**
    * Routing group selector that relies on the X-Presto-Routing-Group header to determine the right
    * routing group.
    */
   static RoutingGroupSelector byRoutingGroupHeader() {
-    return request -> request.getHeader(ROUTING_GROUP_HEADER);
+    return request -> getRoutingGroupHeader(request);
+  }
+
+  static String getRoutingGroupHeader(HttpServletRequest request) {
+    String prestoHeader = request.getHeader(PRESTO_ROUTING_GROUP_HEADER);
+    String trinoHeader = request.getHeader(TRINO_ROUTING_GROUP_HEADER);
+    if (prestoHeader == null) {
+      return trinoHeader;
+    } else {
+      return prestoHeader;
+    }
   }
 
   /**
