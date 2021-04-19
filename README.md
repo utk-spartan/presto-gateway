@@ -57,6 +57,9 @@ curl -X POST http://localhost:8080/entity?entityType=GATEWAY_BACKEND \
     }'
 
 ```
+```$xslt
+curl -X POST "http://localhost:8083/entity?entityType=GATEWAY_BACKEND" -d '{  "name": "presto2","proxyTo": "http://presto:8080","active": true, "routingGroup": "adhoc", "externalUrl": "http://localhost:8080", }'
+```
 If the backend URL is different from the `proxyTo` URL (for example if they are internal vs. external hostnames). You can use the optional `externalUrl` field to override the link in the Active Backends page.
 ```$xslt
 curl -X POST http://localhost:8080/entity?entityType=GATEWAY_BACKEND \
