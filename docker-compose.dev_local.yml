@@ -19,7 +19,6 @@ services:
       ADMIN_PORT: 8091
       APP_PORT: 8090
       ROUTER_PORT: 8083
-      APP_VERSION: 1.8.4
     entrypoint: /app/dockerconf/entrypoint.sh
     # entrypoint: ["tail", "-f", "/dev/null"]
     expose:

@@ -21,6 +21,7 @@ RUN mkdir -p /usr/share/java \
 
 ENV PERSISTANCE_DB_BOOTSTRAP "/app/gateway-ha/src/main/resources/gateway-ha-persistence.sql" 
 ENV GATEWAY_HA_CONFIG_FILE "/app/gateway-ha/gateway-ha-config.yml" 
+ENV APP_VERSION 1.8.5
 ENV APP_BINARY "/app/gateway-ha/target/gateway-ha-"${APP_VERSION}"-jar-with-dependencies.jar"
 
 ENV ROUTER_PORT 8080
