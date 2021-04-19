@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dockerconf/Dockerfile.dev
     image: lyft_presto_gateway
-    # image: utk_presto_gateway:v1
+    # image: utkarshsaxena/utk_presto_gateway:v6
     container_name: lyft_presto_gateway
     volumes:
       - .:/app
@@ -14,10 +14,14 @@ services:
       DB_HOST: lyft_mysql
       DB_PORT: 3306
       DB_USER: root
+      DB_NAME: prestogateway
       DB_PASS: root123
       ADMIN_PORT: 8091
       APP_PORT: 8090
+      ROUTER_PORT: 8083
+      APP_VERSION: 1.8.4
     entrypoint: /app/dockerconf/entrypoint.sh
+    # entrypoint: ["tail", "-f", "/dev/null"]
     expose:
       - "8091"
       - "8090"

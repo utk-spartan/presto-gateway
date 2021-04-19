@@ -1,10 +1,10 @@
 requestRouter:
-  port: 8083
+  port: ROUTER_PORT
   name: prestoRouter
   historySize: 1000
 
 dataStore:
-  jdbcUrl: jdbc:mysql://DB_HOST:DB_PORT/prestogateway
+  jdbcUrl: jdbc:mysql://DB_HOST:DB_PORT/DB_NAME
   user: DB_USER
   password: DB_PASS
   driver: com.mysql.jdbc.Driver

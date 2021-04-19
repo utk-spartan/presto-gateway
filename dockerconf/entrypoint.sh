@@ -1,14 +1,16 @@
 #!/bin/bash
-set -eux
+set -eu
 
 initialize() {
     echo "Setting up config"
     APP_CONFIG=/tmp/config.yml
-    cp gateway-ha/gateway-ha-config.yml "${APP_CONFIG}"
+    cp "${GATEWAY_HA_CONFIG_FILE}" "${APP_CONFIG}"
     sed -i.u "s|DB_HOST|${DB_HOST}|g" "${APP_CONFIG}"
     sed -i.u "s|DB_PORT|${DB_PORT}|g" "${APP_CONFIG}"
     sed -i.u "s|DB_USER|${DB_USER}|g" "${APP_CONFIG}"
     sed -i.u "s|DB_PASS|${DB_PASS}|g" "${APP_CONFIG}"
+    sed -i.u "s|DB_NAME|${DB_NAME}|g" "${APP_CONFIG}"
+    sed -i.u "s|ROUTER_PORT|${ROUTER_PORT}|g" "${APP_CONFIG}"
     sed -i.u "s|APP_PORT|${APP_PORT}|g" "${APP_CONFIG}"
     sed -i.u "s|ADMIN_PORT|${ADMIN_PORT}|g" "${APP_CONFIG}"
 }
@@ -46,10 +48,16 @@ setup_mysql_dev_schema()
     check_mysql_connection
 
     echo "Setting up DB: mysql"
-    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D prestogateway < gateway-ha/src/main/resources/gateway-ha-persistence.sql
+    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D prestogateway < "${PERSISTANCE_DB_BOOTSTRAP}"
+}
+
+run_app()
+{
+    echo "Running gateway Service"
+    java -jar "${APP_BINARY}" server "${APP_CONFIG}"
 }
 
 initialize
 check_mysql_connection
 setup_mysql_dev_schema
-java -jar gateway-ha/target/gateway-ha-"${APP_VERSION}"-jar-with-dependencies.jar server "${APP_CONFIG}"
+run_app
