@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - trino_v1
 
 jobs:
   docker:
