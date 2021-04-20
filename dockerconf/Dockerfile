@@ -22,6 +22,9 @@ COPY --from=builder /app/gateway-ha/gateway-ha-config.yml .
 COPY --from=builder /app/gateway-ha/src/main/resources/gateway-ha-persistence.sql .
 COPY --from=builder /app/dockerconf/entrypoint.sh ./dockerconf/entrypoint.sh
 
+COPY dockerconf/qubolePrestoPublic.cer /app/qubolePresto.cer
+RUN keytool -noprompt -importcert -file /app/qubolePresto.cer -alias qubolePresto -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+
 ENV PERSISTANCE_DB_BOOTSTRAP "/app/gateway-ha-persistence.sql" 
 ENV GATEWAY_HA_CONFIG_FILE "/app/gateway-ha-config.yml" 
 ENV APP_BINARY "/app/gateway-ha-"${APP_VERSION}"-jar-with-dependencies.jar"
