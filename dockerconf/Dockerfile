@@ -2,7 +2,7 @@ FROM maven:3.8-openjdk-15-slim as builder
 
 COPY . /app
 WORKDIR /app
-RUN mvn clean package -DskipTests -Dmaven.artifact.threads=20
+RUN mvn clean package -DskipTests -Dmaven.artifact.threads=20 --batch-mode
 
 FROM adoptopenjdk/openjdk15:alpine-jre
 
