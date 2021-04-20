@@ -28,7 +28,7 @@ jobs:
         with:
           file: dockerconf/Dockerfile
           push: true
-          tags: razorpay/presto_gateway:latest
+          tags: razorpay/presto_gateway:${{ github.sha }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
